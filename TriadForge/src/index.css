@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+  
+  body {
+    @apply bg-dark text-white;
+  }
+}
+
+@layer components {
+  .glass-effect {
+    @apply backdrop-blur-md bg-dark/30 border border-white/10;
+  }
+  
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary;
+  }
+  
+  .btn-primary {
+    @apply px-6 py-3 rounded-lg bg-gradient-to-r from-primary to-secondary 
+           text-white font-medium transition-all duration-300
+           hover:shadow-lg hover:shadow-primary/20
+           focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-dark;
+  }
+  
+  .section-title {
+    @apply text-4xl md:text-5xl font-bold gradient-text;
+  }
+  
+  .card {
+    @apply glass-effect rounded-xl p-6 transition-all duration-300
+           hover:scale-105 hover:shadow-lg hover:shadow-primary/10;
+  }
+}
