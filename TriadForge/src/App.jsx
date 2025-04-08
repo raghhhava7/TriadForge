@@ -10,6 +10,7 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import Preloader from './components/Preloader';
 import { useState, useEffect } from 'react';
+import Loading from './components/Loading';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -18,30 +19,32 @@ function App() {
     // Simulate loading time
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 2000);
+    }, 3000);
 
     return () => clearTimeout(timer);
   }, []);
 
-  if (isLoading) {
-    return <Preloader />;
-  }
-
   return (
     <Router>
-      <div className="min-h-screen bg-dark">
-        <Navbar />
-        <main>
-          <AnimatePresence mode="wait">
-            <Hero />
-            <About />
-            <Team />
-            <Services />
-            <Portfolio />
-            <Contact />
-          </AnimatePresence>
-        </main>
-        <Footer />
+      <div className="bg-dark min-h-screen">
+        <AnimatePresence mode="popLayout">
+          {isLoading ? (
+            <Loading key="loading-screen" />
+          ) : (
+            <div key="main-content">
+              <Navbar />
+              <main>
+                <Hero />
+                <About />
+                <Team />
+                <Services />
+                <Portfolio />
+                <Contact />
+              </main>
+              <Footer />
+            </div>
+          )}
+        </AnimatePresence>
       </div>
     </Router>
   );
