@@ -125,7 +125,7 @@ const Portfolio = () => {
           ref={titleRef}
           className="section-title text-center mb-16"
         >
-          Our Portfolio
+          Our Projects
         </motion.h2>
 
         <div className="flex justify-center gap-4 mb-12">
@@ -147,7 +147,7 @@ const Portfolio = () => {
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
-          <AnimatePresence mode="wait">
+          <AnimatePresence mode="sync">
             {filteredProjects.map((project, index) => (
               <ProjectCard
                 key={index}

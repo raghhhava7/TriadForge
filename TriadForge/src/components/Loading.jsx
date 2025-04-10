@@ -35,7 +35,10 @@ const Loading = forwardRef((props, ref) => {
           loop={true}
           autoplay={true}
           rendererSettings={{
-            preserveAspectRatio: 'xMidYMid slice'
+            preserveAspectRatio: 'xMidYMid slice',
+            fontFamily: 'Arial, Helvetica, sans-serif',
+            progressiveLoad: true,
+            hideOnTransparent: true
           }}
         />
       </div>

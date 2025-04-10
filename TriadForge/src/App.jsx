@@ -5,10 +5,10 @@ import Hero from './components/Hero';
 import About from './components/About';
 import Team from './components/Team';
 import Services from './components/Services';
-import Portfolio from './components/Portfolio';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import Preloader from './components/Preloader';
+import Sidebar from './components/Sidebar';
 import { useState, useEffect } from 'react';
 import Loading from './components/Loading';
 
@@ -33,12 +33,12 @@ function App() {
           ) : (
             <div key="main-content">
               <Navbar />
+              <Sidebar />
               <main>
                 <Hero />
                 <About />
                 <Team />
                 <Services />
-                <Portfolio />
                 <Contact />
               </main>
               <Footer />

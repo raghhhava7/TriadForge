@@ -55,6 +55,17 @@ const Globe = () => {
 };
 
 const TeamMember3D = ({ modelPath }) => {
+  // If modelPath is null, just return the fallback scene
+  if (!modelPath) {
+    return (
+      <>
+        <Environment preset="city" />
+        <Stars radius={600} depth={250} count={25000} factor={4} saturation={0} fade speed={1} />
+        <Globe />
+      </>
+    );
+  }
+
   try {
     const { scene } = useGLTF(modelPath);
     return (
@@ -67,7 +78,14 @@ const TeamMember3D = ({ modelPath }) => {
     );
   } catch (error) {
     console.error('Error loading 3D model:', error);
-    return null;
+    // Return a fallback 3D scene instead of null
+    return (
+      <>
+        <Environment preset="city" />
+        <Stars radius={600} depth={250} count={25000} factor={4} saturation={0} fade speed={1} />
+        <Globe />
+      </>
+    );
   }
 };
 
@@ -75,6 +93,8 @@ const TeamMember = ({ name, role, bio, image, delay, modelPath }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [show3D, setShow3D] = useState(false);
   const canvasRef = useRef(null);
+  const touchStartY = useRef(0);
+  const isScrolling = useRef(false);
 
   useEffect(() => {
     if (show3D && canvasRef.current) {
@@ -94,6 +114,44 @@ const TeamMember = ({ name, role, bio, image, delay, modelPath }) => {
     }
   }, [show3D]);
 
+  // Add cleanup for WebGL context
+  useEffect(() => {
+    return () => {
+      if (canvasRef.current) {
+        const canvas = canvasRef.current;
+        const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+        if (gl) {
+          gl.getExtension('WEBGL_lose_context')?.loseContext();
+        }
+      }
+    };
+  }, []);
+
+  // Handle touch events for mobile scrolling
+  const handleTouchStart = (e) => {
+    touchStartY.current = e.touches[0].clientY;
+    isScrolling.current = false;
+  };
+
+  const handleTouchMove = (e) => {
+    if (!isScrolling.current) {
+      const touchY = e.touches[0].clientY;
+      const deltaY = touchY - touchStartY.current;
+      
+      // If the user is trying to scroll (vertical movement is greater than horizontal)
+      if (Math.abs(deltaY) > 10) {
+        isScrolling.current = true;
+        // Temporarily hide 3D to allow scrolling
+        setShow3D(false);
+        
+        // Re-enable 3D after a short delay
+        setTimeout(() => {
+          setShow3D(true);
+        }, 500);
+      }
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
@@ -109,9 +167,11 @@ const TeamMember = ({ name, role, bio, image, delay, modelPath }) => {
         setIsHovered(false);
         setShow3D(false);
       }}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
     >
       <div className="absolute inset-0">
-        <AnimatePresence mode="wait">
+        <AnimatePresence mode="sync">
           {show3D ? (
             <motion.div
               key="3d-view"
@@ -122,7 +182,15 @@ const TeamMember = ({ name, role, bio, image, delay, modelPath }) => {
               className="w-full h-full"
             >
               <Suspense fallback={<div className="w-full h-full bg-dark" />}>
-                <Canvas camera={{ position: [0, 0, 25] }}>
+                <Canvas 
+                  camera={{ position: [0, 0, 25] }}
+                  gl={{ 
+                    powerPreference: "high-performance",
+                    antialias: true,
+                    alpha: true 
+                  }}
+                  style={{ touchAction: "pan-y" }}
+                >
                   <ambientLight intensity={1} />
                   <pointLight position={[10, 10, 10]} intensity={4} />
                   <pointLight position={[-10, -10, -10]} intensity={3} />
@@ -133,6 +201,7 @@ const TeamMember = ({ name, role, bio, image, delay, modelPath }) => {
                     autoRotate 
                     autoRotateSpeed={2}
                     enablePan={false}
+                    enableTouch={false}
                   />
                 </Canvas>
               </Suspense>
@@ -198,26 +267,26 @@ const Team = () => {
     {
       id: 1,
       name: 'Venkata Teja',
-      role: 'UI/UX Specialist',
+      role: '',
       bio: 'Expert in creating beautiful and intuitive user interfaces with a focus on user experience. MERN stack developer, DSA enthusiast, and Flutter developer with a passion for building visually appealing applications.',
       image: tejaPhoto,
-      modelPath: '/models/designer.glb',
+      modelPath: null,
     },
     {
       id: 2,
       name: 'Bhavesh',
-      role: 'Backend Developer',
+      role: '',
       bio: 'Specializes in server-side development and creating robust backend solutions. MERN stack developer with expertise in Java and React Native for building scalable server architectures.',
       image: bhaveshPhoto,
-      modelPath: '/models/backend.glb',
+      modelPath: null,
     },
     {
       id: 3,
       name: 'Raghava',
-      role: 'IoT Developer',
+      role: '',
       bio: 'Expert in IoT development and creating connected solutions. Specializes in MongoDB, Express.js, React, and Node.js, delivering innovative IoT applications and smart solutions.',
       image: raghavaPhoto,
-      modelPath: '/models/iot.glb',
+      modelPath: null,
     },
   ];
 

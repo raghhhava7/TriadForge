@@ -106,11 +106,16 @@ const Contact = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Robot Animation */}
-          <div className="hidden lg:block h-[400px]">
+          <div className="h-[300px] lg:h-[400px]">
             <Lottie
               animationData={robotAnimation}
               loop={true}
-              style={{ width: '100%', height: '100%', maxWidth: '400px' }}
+              style={{ width: '100%', height: '100%', maxWidth: '400px', margin: '0 auto' }}
+              rendererSettings={{
+                fontFamily: 'Arial, Helvetica, sans-serif',
+                progressiveLoad: true,
+                hideOnTransparent: true
+              }}
             />
           </div>
 

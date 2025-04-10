@@ -92,6 +92,24 @@ const Footer = () => {
                   UI/UX Design
                 </motion.a>
               </li>
+              <li>
+                <motion.a
+                  href="#services"
+                  whileHover={{ x: 5, color: '#00f5ff' }}
+                  className="text-gray-300 hover:text-primary transition-colors"
+                >
+                  App Development
+                </motion.a>
+              </li>
+              <li>
+                <motion.a
+                  href="#services"
+                  whileHover={{ x: 5, color: '#00f5ff' }}
+                  className="text-gray-300 hover:text-primary transition-colors"
+                >
+                  More 😉
+                </motion.a>
+              </li>
             </ul>
           </div>
 
@@ -99,10 +117,6 @@ const Footer = () => {
             <h4 className="text-white font-bold mb-4">Contact</h4>
             <ul className="space-y-2">
               <li className="text-gray-300">contact@triadforge.com</li>
-              <li className="text-gray-300">+1 (555) 123-4567</li>
-              <li className="text-gray-300">
-                123 Tech Street, Silicon Valley, CA 94025
-              </li>
             </ul>
           </div>
         </div>
