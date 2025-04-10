@@ -4,6 +4,87 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --primary-color: #3b82f6;
+  --dark-bg: #111827;
+  --dark-text: #f9fafb;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--dark-bg);
+  color: var(--dark-text);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-height: 100vh;
+  position: relative;
+  background-color: var(--dark-bg) !important;
+}
+
+/* Force dark theme */
+.bg-dark {
+  background-color: var(--dark-bg) !important;
+}
+
+/* Prevent white flash on mobile */
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+}
+
+/* Fix for mobile Safari */
+@supports (-webkit-touch-callout: none) {
+  .min-h-screen {
+    min-height: -webkit-fill-available;
+  }
+}
+
+/* Improve mobile performance */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Ensure text is always visible */
+.text-white {
+  color: var(--dark-text) !important;
+}
+
+/* Fix for iOS momentum scrolling */
+.overflow-auto, .overflow-scroll {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Prevent layout shifts */
+img, video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Ensure proper rendering on high DPI screens */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  body {
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* Fix for mobile viewport height */
+@supports (-webkit-touch-callout: none) {
+  .h-screen {
+    height: -webkit-fill-available;
+  }
+}
+
+/* Fix for mobile theme flashing */
+html {
+  background-color: var(--dark-bg);
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;

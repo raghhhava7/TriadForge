@@ -1,0 +1,66 @@
+/* Mobile-specific fixes */
+
+/* Fix for iOS Safari 100vh issue */
+@supports (-webkit-touch-callout: none) {
+  .min-h-screen, .h-screen {
+    min-height: -webkit-fill-available;
+    height: -webkit-fill-available;
+  }
+}
+
+/* Fix for mobile Safari scrolling */
+html, body {
+  overflow-x: hidden;
+  position: relative;
+  width: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Fix for mobile Safari tap highlight */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Fix for mobile Safari font rendering */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Fix for mobile Safari transitions */
+@media (prefers-reduced-motion: no-preference) {
+  .transition-all, .transition-colors, .transition-opacity, .transition-transform {
+    transition-duration: 300ms;
+  }
+}
+
+/* Fix for mobile Safari backdrop-filter */
+.backdrop-blur-sm, .backdrop-blur-md, .backdrop-blur-lg {
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+/* Fix for mobile Safari fixed positioning */
+.fixed {
+  position: fixed;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+/* Fix for mobile Safari z-index stacking */
+.z-10, .z-20, .z-30, .z-40, .z-50 {
+  z-index: 10;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+/* Fix for mobile Safari animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-in-out;
+} 
